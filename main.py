@@ -1,4 +1,5 @@
 import os
+import sys
 from rich import print
 from rich.prompt import Prompt
 
@@ -16,11 +17,20 @@ commands = {
         '5': 'core',
         }
 
+
+
 def menu():
+    args = sys.argv
+    args_str = ''
+
+    if len(args) > 1:
+        for i in range(1, len(args)):
+            args_str += args[i] + ' '
+
     os.system('git status')
     choose = tableMenu()
     if choose in ['1', '2', '3', '4', '5']:
-        commit_message = Prompt.ask("Commit message")
+        commit_message = args_str if args_str != '' else Prompt.ask("Commit message")
         if commit_message == '':
             print('[red]Commit message is required')
             menu()
