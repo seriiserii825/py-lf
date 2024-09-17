@@ -15,7 +15,6 @@ def addToGitIgnore(filename):
         file.write(filename + '\n')
 
 def encryptFiles():
-    # read file for each line
     if os.path.isfile('.gpgrc'):
         with open('.gpgrc', 'r') as file:
             lines = file.readlines()
@@ -23,6 +22,7 @@ def encryptFiles():
                 line = line.replace('\n', '')
                 print(Panel(f'[blue]encrypt line: {line}'))
                 print(not os.path.exists(line))
+                os.system(f'rm {line}')
                 file_without_gpg = line.replace('.gpg', '')
                 os.system(f'git rm --cached {file_without_gpg}')
                 addToGitIgnore(file_without_gpg)
