@@ -1,18 +1,15 @@
 import os
-from rich.panel import Panel
 from rich import print
 user = os.getlogin()
 
 def addToGitIgnore(filename):
     with open('.gitignore', 'r') as file:
-        # check if file is already in gitignore
         file.seek(0)
         lines = file.readlines()
-    for line in lines:
-        if line == filename:
-            return
-    with open('.gitignore', 'a') as file:
-        file.write(filename + '\n')
+        lines = [line.replace('\n', '') for line in lines]
+    if filename not in lines:
+        command = f'echo {filename} >> .gitignore'
+        os.system(command)
 
 def encryptFiles():
     if os.path.isfile('.gpgrc'):
@@ -20,9 +17,9 @@ def encryptFiles():
             lines = file.readlines()
             for line in lines:
                 line = line.replace('\n', '')
-                print(Panel(f'[blue]encrypt line: {line}'))
-                print(f"gpg file exists: {os.path.exists(line)}")
+                print(f"line: {line}")
                 file_without_gpg = line.replace('.gpg', '')
+                print(f"file_without_gpg: {file_without_gpg}")
                 os.system(f'rm {line}')
                 os.system(f'git rm --cached {file_without_gpg}')
                 addToGitIgnore(file_without_gpg)

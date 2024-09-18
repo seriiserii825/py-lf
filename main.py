@@ -30,6 +30,8 @@ def menu():
     os.system('git status')
     choose = tableMenu()
     if choose in ['1', '2', '3', '4', '5']:
+        # check git status if need to make a commit
+        encryptFiles()
         commit_message = args_str if args_str != '' else Prompt.ask("Commit message")
         if commit_message == '':
             print('[red]Commit message is required')
@@ -50,7 +52,12 @@ def menu():
             menu()
 
 if os.path.exists('.gpgrc'):
-    encryptFiles()
-    menu()
+    if os.system('git diff --quiet') != 0:
+        menu()
+    else:
+        print('[red]No changes to commit')
 else:
-    menu()
+    if os.system('git diff --quiet') != 0:
+        menu()
+    else:
+        print('[red]No changes to commit')
