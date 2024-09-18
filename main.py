@@ -53,8 +53,8 @@ def menu():
             print('[red]Invalid option')
             menu()
 
-repo = Repo('.')
 if os.path.exists('.gpgrc'):
+    repo = Repo('.')
     if repo.is_dirty() or len(repo.untracked_files) > 0:
         menu()
     else:
