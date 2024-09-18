@@ -21,9 +21,9 @@ def encryptFiles():
             for line in lines:
                 line = line.replace('\n', '')
                 print(Panel(f'[blue]encrypt line: {line}'))
-                print(not os.path.exists(line))
-                os.system(f'rm {line}')
+                print(f"gpg file exists: {os.path.exists(line)}")
                 file_without_gpg = line.replace('.gpg', '')
+                os.system(f'rm {line}')
                 os.system(f'git rm --cached {file_without_gpg}')
                 addToGitIgnore(file_without_gpg)
                 if not os.path.isfile(line):
