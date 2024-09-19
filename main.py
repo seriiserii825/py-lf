@@ -58,7 +58,8 @@ if os.path.exists('.gpgrc'):
     else:
         print('[red]No changes to commit')
 else:
-    if os.system('git diff --quiet') != 0:
+    repo = Repo('.')
+    if repo.is_dirty() or len(repo.untracked_files) > 0:
         menu()
     else:
         print('[red]No changes to commit')
