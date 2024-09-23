@@ -8,6 +8,7 @@ from utils.decryptFiles import decryptFiles
 from utils.encryptFiles import encryptFiles
 from utils.tableMenu import tableMenu
 
+#get user name from system
 user = os.getlogin()
 
 commands = {
